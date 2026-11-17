@@ -1,0 +1,10 @@
+node_modules/
+.env
+__pycache__/
+*.pyc
+venv/
+.venv/
+mysql_data/
+qr_generados/
+.vscode/
+.DS_Store
