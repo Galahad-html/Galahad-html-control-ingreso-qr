@@ -8,3 +8,5 @@ mysql_data/
 qr_generados/
 .vscode/
 .DS_Store
+lector-qr/
+.env
