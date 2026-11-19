@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= locals.titulo || 'Control de Ingreso' %></title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+<% if (usuario) { %>
+  <nav class="navbar">
+    <span class="navbar__marca">Control de Ingreso</span>
+    <div class="navbar__usuario">
+      <span><%= usuario.nombre %> (<%= usuario.rol %>)</span>
+      <form action="/logout" method="POST">
+        <button type="submit" class="btn btn--secundario">Cerrar sesión</button>
+      </form>
+    </div>
+  </nav>
+<% } %>
+<main class="contenedor">

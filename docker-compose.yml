@@ -17,7 +17,25 @@ services:
       interval: 5s
       timeout: 5s
       retries: 15
-
+  web:
+    build: ./web
+    container_name: ingreso_web
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TZ}
+    ports:
+      - "${WEB_PORT}:3000"
+    volumes:
+      - ./web/src:/app/src
+    depends_on:
+      db:
+        condition: service_healthy
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: ingreso_phpmyadmin
