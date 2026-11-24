@@ -28,6 +28,12 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
+// Manejo global de errores
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(500).send('Ocurrió un error en el servidor');
+});
+
 app.listen(PUERTO, '0.0.0.0', () => {
   console.log(`Web escuchando en el puerto ${PUERTO}`);
 });

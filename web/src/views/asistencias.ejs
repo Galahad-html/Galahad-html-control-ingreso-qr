@@ -1,0 +1,89 @@
+<%- include('layout/header') %>
+
+<h1>Asistencias</h1>
+
+<form method="GET" action="/asistencias" class="filtros tarjeta">
+  <div class="filtros__campo">
+    <label for="desde">Desde</label>
+    <input type="date" id="desde" name="desde" value="<%= filtros.desde %>">
+  </div>
+
+  <div class="filtros__campo">
+    <label for="hasta">Hasta</label>
+    <input type="date" id="hasta" name="hasta" value="<%= filtros.hasta %>">
+  </div>
+
+  <div class="filtros__campo">
+    <label for="trabajadorId">Trabajador</label>
+    <select id="trabajadorId" name="trabajadorId">
+      <option value="">Todos</option>
+      <% trabajadores.forEach((t) => { %>
+        <option value="<%= t.id %>" <%= String(t.id) === String(filtros.trabajadorId) ? 'selected' : '' %>>
+          <%= t.apellidos %>, <%= t.nombres %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="filtros__campo">
+    <label for="area">Área</label>
+    <select id="area" name="area">
+      <option value="">Todas</option>
+      <% areas.forEach((a) => { %>
+        <option value="<%= a %>" <%= a === filtros.area ? 'selected' : '' %>><%= a %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="filtros__acciones">
+    <button type="submit" class="btn">Filtrar</button>
+    <a href="/asistencias" class="btn btn--secundario">Limpiar</a>
+  </div>
+</form>
+
+<div class="tarjeta">
+  <p class="resumen">
+    <strong><%= asistencias.length %></strong> registros ·
+    Tardanza acumulada: <strong><%= totalTardanza %> min</strong>
+  </p>
+
+  <div class="tabla-contenedor">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>DNI</th>
+          <th>Trabajador</th>
+          <th>Área</th>
+          <th>Puerta</th>
+          <th>Hora de entrada</th>
+          <th>Tardanza (min)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (asistencias.length === 0) { %>
+          <tr><td colspan="7" class="tabla__vacia">No hay registros con esos filtros</td></tr>
+        <% } %>
+        <% asistencias.forEach((a) => { %>
+          <tr>
+            <td><%= a.fecha %></td>
+            <td><%= a.dni %></td>
+            <td><%= a.apellidos %>, <%= a.nombres %></td>
+            <td><%= a.area %></td>
+            <td><%= a.puerta %></td>
+            <td><%= a.hora_entrada %></td>
+            <td>
+              <% if (a.minutos_tardanza > 0) { %>
+                <span class="etiqueta etiqueta--tarde"><%= a.minutos_tardanza %></span>
+              <% } else { %>
+                <span class="etiqueta etiqueta--puntual">Puntual</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('layout/footer') %>

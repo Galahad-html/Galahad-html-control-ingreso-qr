@@ -9,7 +9,11 @@
 <body>
 <% if (usuario) { %>
   <nav class="navbar">
-    <span class="navbar__marca">Control de Ingreso</span>
+    <div class="navbar__izquierda">
+      <span class="navbar__marca">Control de Ingreso</span>
+      <a href="/dashboard" class="navbar__enlace">Dashboard</a>
+      <a href="/asistencias" class="navbar__enlace">Asistencias</a>
+    </div>
     <div class="navbar__usuario">
       <span><%= usuario.nombre %> (<%= usuario.rol %>)</span>
       <form action="/logout" method="POST">

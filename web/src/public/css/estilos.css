@@ -55,3 +55,45 @@ body {
   padding: 10px;
   border-radius: 6px;
 }
+
+.navbar__izquierda { display: flex; align-items: center; gap: 20px; }
+.navbar__enlace { color: #cbd5e1; text-decoration: none; }
+.navbar__enlace:hover { color: #fff; }
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+.filtros__campo { display: flex; flex-direction: column; gap: 4px; }
+.filtros__campo input,
+.filtros__campo select {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.filtros__acciones { display: flex; gap: 8px; }
+a.btn { text-decoration: none; display: inline-block; }
+
+.resumen { margin-top: 0; }
+.tabla-contenedor { overflow-x: auto; }
+.tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabla th, .tabla td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+.tabla th { background: #f9fafb; }
+.tabla__vacia { text-align: center; color: #6b7280; padding: 24px; }
+
+.etiqueta {
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.etiqueta--tarde { background: #fee2e2; color: #991b1b; }
+.etiqueta--puntual { background: #dcfce7; color: #166534; }
