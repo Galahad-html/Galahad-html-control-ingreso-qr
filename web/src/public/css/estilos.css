@@ -111,3 +111,30 @@ a.btn { text-decoration: none; display: inline-block; }
   font-size: 14px;
   padding: 0;
 }
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.indicador {
+  background: #fff;
+  border-left: 6px solid #16a34a;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.indicador--alerta { border-left-color: #dc2626; }
+.indicador--neutro { border-left-color: #64748b; }
+.indicador__valor { font-size: 36px; font-weight: bold; }
+.indicador__titulo { color: #6b7280; font-size: 14px; }
+
+.paneles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 16px;
+}
+.paneles h2 { margin-top: 0; font-size: 18px; }

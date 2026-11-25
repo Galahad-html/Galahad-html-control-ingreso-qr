@@ -17,7 +17,7 @@ router.get('/login', authController.mostrarLogin);
 router.post('/login', atrapar(authController.login));
 router.post('/logout', authController.logout);
 
-router.get('/dashboard', requiereLogin, dashboardController.mostrarDashboard);
+router.get('/dashboard', requiereLogin, atrapar(dashboardController.mostrarDashboard));
 router.get('/asistencias', requiereLogin, atrapar(asistenciaController.listar));
 
 // Rutas de gestión de trabajadores

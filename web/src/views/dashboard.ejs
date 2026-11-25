@@ -1,6 +1,72 @@
 <%- include('layout/header') %>
 
 <h1>Bienvenido, <%= usuario.nombre %></h1>
-<p>Aquí irá el resumen de asistencias del día.</p>
+
+<section class="indicadores">
+  <article class="indicador">
+    <span class="indicador__valor"><%= resumen.presentes %></span>
+    <span class="indicador__titulo">Presentes hoy</span>
+  </article>
+  <article class="indicador indicador--alerta">
+    <span class="indicador__valor"><%= resumen.tardanzas %></span>
+    <span class="indicador__titulo">Tardanzas hoy</span>
+  </article>
+  <article class="indicador indicador--neutro">
+    <span class="indicador__valor"><%= resumen.ausentes %></span>
+    <span class="indicador__titulo">Sin registro hoy (de <%= resumen.totalActivos %>)</span>
+  </article>
+</section>
+
+<div class="paneles">
+  <section class="tarjeta">
+    <h2>Mayor tardanza acumulada del mes</h2>
+    <table class="tabla">
+      <thead>
+        <tr><th>Trabajador</th><th>Área</th><th>Días tarde</th><th>Total (min)</th></tr>
+      </thead>
+      <tbody>
+        <% if (ranking.length === 0) { %>
+          <tr><td colspan="4" class="tabla__vacia">Sin tardanzas este mes</td></tr>
+        <% } %>
+        <% ranking.forEach((r) => { %>
+          <tr>
+            <td><%= r.apellidos %>, <%= r.nombres %></td>
+            <td><%= r.area %></td>
+            <td><%= r.dias_tarde %></td>
+            <td><span class="etiqueta etiqueta--tarde"><%= r.total_tardanza %></span></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="tarjeta">
+    <h2>Últimas entradas de hoy</h2>
+    <table class="tabla">
+      <thead>
+        <tr><th>Hora</th><th>Trabajador</th><th>Puerta</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        <% if (ultimas.length === 0) { %>
+          <tr><td colspan="4" class="tabla__vacia">Aún no hay entradas hoy</td></tr>
+        <% } %>
+        <% ultimas.forEach((u) => { %>
+          <tr>
+            <td><%= u.hora_entrada %></td>
+            <td><%= u.apellidos %>, <%= u.nombres %></td>
+            <td><%= u.puerta %></td>
+            <td>
+              <% if (u.minutos_tardanza > 0) { %>
+                <span class="etiqueta etiqueta--tarde"><%= u.minutos_tardanza %> min</span>
+              <% } else { %>
+                <span class="etiqueta etiqueta--puntual">Puntual</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+</div>
 
 <%- include('layout/footer') %>
