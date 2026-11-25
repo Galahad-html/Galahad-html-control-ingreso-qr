@@ -1,0 +1,56 @@
+<%- include('../layout/header') %>
+
+<div class="encabezado">
+  <h1>Trabajadores</h1>
+  <a href="/trabajadores/nuevo" class="btn">Nuevo trabajador</a>
+</div>
+
+<div class="tarjeta">
+  <div class="tabla-contenedor">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>DNI</th>
+          <th>Trabajador</th>
+          <th>Área</th>
+          <th>Hora oficial</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (trabajadores.length === 0) { %>
+          <tr><td colspan="6" class="tabla__vacia">No hay trabajadores registrados</td></tr>
+        <% } %>
+        <% trabajadores.forEach((t) => { %>
+          <tr>
+            <td><%= t.dni %></td>
+            <td><%= t.apellidos %>, <%= t.nombres %></td>
+            <td><%= t.area %></td>
+            <td><%= t.hora_entrada_oficial.slice(0, 5) %></td>
+            <td>
+              <% if (t.activo) { %>
+                <span class="etiqueta etiqueta--puntual">Activo</span>
+              <% } else { %>
+                <span class="etiqueta etiqueta--tarde">Inactivo</span>
+              <% } %>
+            </td>
+            <td class="acciones">
+              <a href="/trabajadores/<%= t.id %>/editar">Editar</a>
+              <a href="/trabajadores/<%= t.id %>/qr" target="_blank">Ver QR</a>
+              <a href="/trabajadores/<%= t.id %>/qr?descargar=1">Descargar QR</a>
+              <form action="/trabajadores/<%= t.id %>/estado" method="POST">
+                <input type="hidden" name="activo" value="<%= t.activo ? 0 : 1 %>">
+                <button type="submit" class="enlace-boton">
+                  <%= t.activo ? 'Desactivar' : 'Activar' %>
+                </button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>

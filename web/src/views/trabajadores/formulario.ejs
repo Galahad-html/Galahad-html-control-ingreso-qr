@@ -1,0 +1,35 @@
+<%- include('../layout/header') %>
+
+<h1><%= titulo %></h1>
+
+<section class="tarjeta tarjeta--formulario">
+  <% if (error) { %>
+    <p class="alerta"><%= error %></p>
+  <% } %>
+
+  <form action="<%= accion %>" method="POST" class="formulario">
+    <label for="dni">DNI</label>
+    <input type="text" id="dni" name="dni" maxlength="8" pattern="\d{8}"
+           value="<%= trabajador.dni || '' %>" required>
+
+    <label for="nombres">Nombres</label>
+    <input type="text" id="nombres" name="nombres" value="<%= trabajador.nombres || '' %>" required>
+
+    <label for="apellidos">Apellidos</label>
+    <input type="text" id="apellidos" name="apellidos" value="<%= trabajador.apellidos || '' %>" required>
+
+    <label for="area">Área</label>
+    <input type="text" id="area" name="area" value="<%= trabajador.area || '' %>" required>
+
+    <label for="horaEntrada">Hora de entrada oficial</label>
+    <input type="time" id="horaEntrada" name="horaEntrada"
+           value="<%= (trabajador.hora_entrada_oficial || '08:00').slice(0, 5) %>" required>
+
+    <div class="filtros__acciones">
+      <button type="submit" class="btn">Guardar</button>
+      <a href="/trabajadores" class="btn btn--secundario">Cancelar</a>
+    </div>
+  </form>
+</section>
+
+<%- include('../layout/footer') %>

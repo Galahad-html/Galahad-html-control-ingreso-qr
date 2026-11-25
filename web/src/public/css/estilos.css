@@ -97,3 +97,17 @@ a.btn { text-decoration: none; display: inline-block; }
 }
 .etiqueta--tarde { background: #fee2e2; color: #991b1b; }
 .etiqueta--puntual { background: #dcfce7; color: #166534; }
+
+.encabezado { display: flex; justify-content: space-between; align-items: center; }
+.tarjeta--formulario { max-width: 520px; }
+.acciones { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.acciones form { margin: 0; }
+.acciones a { color: #2563eb; text-decoration: none; }
+.enlace-boton {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}

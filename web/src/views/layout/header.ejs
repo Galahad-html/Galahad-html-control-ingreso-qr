@@ -13,6 +13,9 @@
       <span class="navbar__marca">Control de Ingreso</span>
       <a href="/dashboard" class="navbar__enlace">Dashboard</a>
       <a href="/asistencias" class="navbar__enlace">Asistencias</a>
+      <% if (['admin', 'rrhh'].includes(usuario.rol)) { %>
+        <a href="/trabajadores" class="navbar__enlace">Trabajadores</a>
+      <% } %>
     </div>
     <div class="navbar__usuario">
       <span><%= usuario.nombre %> (<%= usuario.rol %>)</span>
