@@ -1,0 +1,82 @@
+<%- include('../layout/header') %>
+
+<h1>Reportes de asistencia</h1>
+
+<form method="GET" action="/reportes" class="filtros tarjeta">
+  <div class="filtros__campo">
+    <label for="desde">Desde</label>
+    <input type="date" id="desde" name="desde" value="<%= filtros.desde %>">
+  </div>
+  <div class="filtros__campo">
+    <label for="hasta">Hasta</label>
+    <input type="date" id="hasta" name="hasta" value="<%= filtros.hasta %>">
+  </div>
+  <div class="filtros__campo">
+    <label for="trabajadorId">Trabajador</label>
+    <select id="trabajadorId" name="trabajadorId">
+      <option value="">Todos</option>
+      <% trabajadores.forEach((t) => { %>
+        <option value="<%= t.id %>" <%= String(t.id) === String(filtros.trabajadorId) ? 'selected' : '' %>>
+          <%= t.apellidos %>, <%= t.nombres %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="filtros__campo">
+    <label for="area">Área</label>
+    <select id="area" name="area">
+      <option value="">Todas</option>
+      <% areas.forEach((a) => { %>
+        <option value="<%= a %>" <%= a === filtros.area ? 'selected' : '' %>><%= a %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="filtros__acciones">
+    <button type="submit" class="btn">Generar</button>
+    <a href="/reportes" class="btn btn--secundario">Limpiar</a>
+  </div>
+</form>
+
+<div class="tarjeta">
+  <div class="encabezado">
+    <p class="resumen">
+      Tardanza acumulada total: <strong><%= totalGeneral %> min</strong>
+    </p>
+    <div class="filtros__acciones">
+      <a href="/reportes/excel?<%= queryString %>" class="btn">Exportar Excel</a>
+      <a href="/reportes/pdf?<%= queryString %>" class="btn">Exportar PDF</a>
+    </div>
+  </div>
+
+  <div class="tabla-contenedor">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>DNI</th>
+          <th>Trabajador</th>
+          <th>Área</th>
+          <th>Días asistidos</th>
+          <th>Días con tardanza</th>
+          <th>Tardanza acumulada (min)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (resumen.length === 0) { %>
+          <tr><td colspan="6" class="tabla__vacia">No hay datos con esos filtros</td></tr>
+        <% } %>
+        <% resumen.forEach((r) => { %>
+          <tr>
+            <td><%= r.dni %></td>
+            <td><%= r.apellidos %>, <%= r.nombres %></td>
+            <td><%= r.area %></td>
+            <td><%= r.dias_asistidos %></td>
+            <td><%= r.dias_tarde %></td>
+            <td><strong><%= r.total_tardanza %></strong></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>

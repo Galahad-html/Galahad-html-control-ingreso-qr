@@ -3,6 +3,7 @@ const authController = require('../controllers/auth.controller');
 const dashboardController = require('../controllers/dashboard.controller');
 const asistenciaController = require('../controllers/asistencia.controller');
 const trabajadorController = require('../controllers/trabajador.controller');
+const reporteController = require('../controllers/reporte.controller');
 const { requiereLogin, requiereRol } = require('../middlewares/auth');
 
 const router = express.Router();
@@ -30,5 +31,8 @@ router.get('/trabajadores/:id/editar', soloGestion, atrapar(trabajadorController
 router.post('/trabajadores/:id', soloGestion, atrapar(trabajadorController.actualizar));
 router.post('/trabajadores/:id/estado', soloGestion, atrapar(trabajadorController.cambiarEstado));
 router.get('/trabajadores/:id/qr', soloGestion, atrapar(trabajadorController.mostrarQr));
+router.get('/reportes', requiereLogin, atrapar(reporteController.mostrar));
+router.get('/reportes/excel', requiereLogin, atrapar(reporteController.exportarExcel));
+router.get('/reportes/pdf', requiereLogin, atrapar(reporteController.exportarPdf));
 
 module.exports = router;

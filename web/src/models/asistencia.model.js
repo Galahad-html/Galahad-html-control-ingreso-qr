@@ -97,4 +97,31 @@ async function ultimasDelDia(limite = 8) {
   return filas;
 }
 
-module.exports = { listar, resumenDelDia, rankingTardanzaMes, ultimasDelDia };
+/** Totales por trabajador: días asistidos, días con tardanza y minutos acumulados. */
+async function resumenPorTrabajador({ desde, hasta, trabajadorId, area } = {}) {
+  const condiciones = [];
+  const parametros = [];
+
+  if (desde) { condiciones.push('a.fecha >= ?'); parametros.push(desde); }
+  if (hasta) { condiciones.push('a.fecha <= ?'); parametros.push(hasta); }
+  if (trabajadorId) { condiciones.push('a.trabajador_id = ?'); parametros.push(trabajadorId); }
+  if (area) { condiciones.push('t.area = ?'); parametros.push(area); }
+
+  const where = condiciones.length ? `WHERE ${condiciones.join(' AND ')}` : '';
+
+  const [filas] = await db.query(
+    `SELECT t.dni, t.nombres, t.apellidos, t.area,
+            COUNT(*) AS dias_asistidos,
+            SUM(a.minutos_tardanza > 0) AS dias_tarde,
+            SUM(a.minutos_tardanza) AS total_tardanza
+     FROM asistencias a
+     JOIN trabajadores t ON t.id = a.trabajador_id
+     ${where}
+     GROUP BY t.id
+     ORDER BY t.apellidos, t.nombres`,
+    parametros
+  );
+  return filas;
+}
+
+module.exports = { listar, resumenDelDia, rankingTardanzaMes, ultimasDelDia, resumenPorTrabajador };
