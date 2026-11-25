@@ -1,3 +1,5 @@
+SET NAMES utf8mb4;
+
 -- Control de Ingreso de Personal con QR
 
 CREATE DATABASE IF NOT EXISTS control_ingreso
